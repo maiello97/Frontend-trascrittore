@@ -95,7 +95,7 @@ export class AppComponent {
       console.log(url)
       window.open(url);
       let formData = new FormData();        //prendo il formdata e lo mando al backend
-      formData.append("file", blob1, "prova.webm");
+      formData.append("file", blob1, "prova.wav");
       this.http.post("http://localhost:8000/uploadfile", formData)
         .subscribe((res) => {
           console.log(res)
