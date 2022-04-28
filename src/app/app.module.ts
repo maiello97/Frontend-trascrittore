@@ -4,18 +4,26 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { TrascrittoreComponent } from './trascrittore/trascrittore.component';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    TrascrittoreComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule, 
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    FormBuilder
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

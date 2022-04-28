@@ -1,0 +1,14 @@
+<div class="position-absolute top-50 start-50 translate-middle p-3 border border-info rounded bg-info bg-opacity-10">
+    <h3 class="text-secondary">Login</h3>
+    <form [formGroup]="form">
+        <div class="form-group">
+          <label for="username" class="text-secondary">Username</label>
+          <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter Username" formControlName="username">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1" class="text-secondary">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" formControlName="password">
+        </div>
+        <button type="submit" class="btn btn-primary mt-2" (click)="gotoTranscriptor()">Login</button>
+    </form>
+</div>

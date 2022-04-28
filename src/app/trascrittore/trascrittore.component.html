@@ -1,0 +1,26 @@
+<nav class="navbar navbar-light bg-primary bg-gradient">
+    <h2 class="mx-auto text-white">
+      Trascrittore
+    </h2>
+</nav>
+
+<div class="bg-info bg-opacity-10" style="height: 100%; width: 100%; position:fixed;">
+
+    <div style="text-align:center;margin-top: 200px;" >
+        <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" style="cursor: pointer;background-color: green;color: white;font-size: 40px;"> Start Recording </button>
+        <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording" style="cursor: pointer;background-color: red;color: white;font-size: 40px;"> Stop Recording </button>
+        
+    </div>
+
+    <div style="text-align:center; margin-top: 3%;">
+        <audio controls="" *ngIf="url">
+            <source [src]="sanitize(url)" type="audio/wav">
+        </audio>
+    </div>
+
+    <div style="text-align:center; width: 100%; height: 100%; margin-top: 3%;">
+        <textarea rows="4" cols="50">{{trascrizione}}</textarea>
+    </div>
+    
+
+</div>
