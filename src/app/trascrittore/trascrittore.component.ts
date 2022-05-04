@@ -3,6 +3,7 @@ declare var $: any;
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trascrittore',
@@ -22,7 +23,7 @@ export class TrascrittoreComponent implements OnInit {
   error:any;
 
   trascrizione:any = ""
-  constructor(private domSanitizer: DomSanitizer, private http: HttpClient) { }
+  constructor(private readonly router: Router, private domSanitizer: DomSanitizer, private http: HttpClient) { }
   sanitize(url: string) {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }
@@ -80,6 +81,14 @@ export class TrascrittoreComponent implements OnInit {
   */
   errorCallback(error:any) {
     this.error = 'Can not play audio in your browser';
+  }
+
+  gotoAddUser(){
+    this.router.navigate(["adduser"])
+  }
+
+  logout(){
+    this.router.navigate(["/"])
   }
 
   ngOnInit(): void {

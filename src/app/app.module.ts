@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { TrascrittoreComponent } from './trascrittore/trascrittore.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { AdduserComponent } from './adduser/adduser.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TrascrittoreComponent
+    TrascrittoreComponent,
+    AdduserComponent
   ],
   imports: [
     BrowserModule,

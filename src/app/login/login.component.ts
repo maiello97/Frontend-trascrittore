@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     formData.append('password', this.form.controls['password'].value)
 
     this.http.post("http://localhost:8000/login", formData).subscribe(res=>{
-      if(res == true){
+      if(res.valueOf() == true){
         this.router.navigate(["/trascrittore"])
       }else{
         alert("Errore nell'autenticazione");
