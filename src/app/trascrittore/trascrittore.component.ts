@@ -12,17 +12,22 @@ import { Router } from '@angular/router';
 })
 export class TrascrittoreComponent implements OnInit {
 
+  check: boolean = false;
 
   title = 'micRecorder';
   //Lets declare Record OBJ
-  record:any;
+  record: any;
   //Will use this flag for toggeling recording
   recording = false;
   //URL of Blob
-  url:any;
-  error:any;
+  url: any;
+  error: any;
 
-  trascrizione:any = ""
+  printCheck() {
+    console.log(this.check)
+  }
+
+  trascrizione: any = ""
   constructor(private readonly router: Router, private domSanitizer: DomSanitizer, private http: HttpClient) { }
   sanitize(url: string) {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
@@ -31,22 +36,25 @@ export class TrascrittoreComponent implements OnInit {
   * Start recording.
   */
   initiateRecording() {
-    this.recording = true;
-    let mediaConstraints = {
-      video: false,
-      audio: true
-    };
-    navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
+    if (!this.check) {
+      this.recording = true;
+      let mediaConstraints = {
+        video: false,
+        audio: true
+      };
+      navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
+    }
+
   }
   /**
   * Will be called automatically.
   */
-  successCallback(stream:any) {
+  successCallback(stream: any) {
     var options = {
       mimeType: "audio/wav",
       numberOfAudioChannels: 1,
       sampleRate: 48000,
-      
+
     };
     //Start Actuall Recording
     var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
@@ -57,41 +65,45 @@ export class TrascrittoreComponent implements OnInit {
   * Stop recording.
   */
   stopRecording() {
-    this.recording = false;
-    this.record.stop(this.processRecording.bind(this));
+    if(!this.check){
+      this.recording = false;
+      this.record.stop(this.processRecording.bind(this));
+    }
+
   }
   /**
   * processRecording Do what ever you want with blob
   * @param  {any} blob Blog
   */
-  processRecording(blob:any) {
+  processRecording(blob: any) {
     this.url = URL.createObjectURL(blob);
     console.log("blob", blob);
     console.log("url", this.url);
     let formData = new FormData();        //prendo il formdata e lo mando al backend
-      formData.append("file", blob, "acetest.wav");
-      formData.append("url", this.url)
-      this.http.post("http://localhost:8000/uploadfile", formData)
-        .subscribe((res) => {
-          this.trascrizione = res
-        })
+    formData.append("file", blob, "acetest.wav");
+    formData.append("url", this.url)
+    this.http.post("http://localhost:8000/uploadfile", formData)
+      .subscribe((res) => {
+        this.trascrizione = res
+      })
   }
   /**
   * Process Error.
   */
-  errorCallback(error:any) {
+  errorCallback(error: any) {
     this.error = 'Can not play audio in your browser';
   }
 
-  gotoAddUser(){
+  gotoAddUser() {
     this.router.navigate(["adduser"])
   }
 
-  logout(){
+  logout() {
     this.router.navigate(["/"])
   }
 
   ngOnInit(): void {
+
   }
 
 }
