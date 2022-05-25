@@ -23,7 +23,6 @@ export class AdduserComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.getAllUsers()
   }
 
   registerUser(){

@@ -1,0 +1,15 @@
+div{
+    background-color: #282a35;
+    border-radius: 5px;
+    border: #282a35
+}
+
+button:hover{
+    background-color: #04aa6d;
+}
+
+button{
+    background-color: #04aa6d;
+    border: #04aa6d;
+
+}

@@ -1,0 +1,12 @@
+#form{
+    background-color: #282a35;
+    border-radius: 5px;
+}
+
+button{
+    background-color: #04aa6d;
+}
+
+button:hover{
+    background-color: #04aa6d;
+}
