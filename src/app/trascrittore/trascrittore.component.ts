@@ -120,6 +120,7 @@ export class TrascrittoreComponent implements OnInit {
         let title = new Date().toLocaleString()
         formData.append("file", blob, title + '.wav');
         formData.append("url", this.url)
+        formData.append("data", title)
         if(this.check){
           formData.append("state", "true")
         }else{
