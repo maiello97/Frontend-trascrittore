@@ -4,6 +4,7 @@ import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { getInstructionStatements } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-trascrittore',
@@ -17,6 +18,7 @@ export class TrascrittoreComponent implements OnInit {
   title = 'micRecorder';
   //Lets declare Record OBJ
   record: any;
+  record2: any;
   //Will use this flag for toggeling recording
   recording = false;
   //URL of Blob
@@ -30,6 +32,8 @@ export class TrascrittoreComponent implements OnInit {
   }
 
   trascrizione: any = ""
+  trascrizione2: any = ""
+
   constructor(private readonly router: Router, private domSanitizer: DomSanitizer, private http: HttpClient) { }
   sanitize(url: string) {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
@@ -77,7 +81,9 @@ export class TrascrittoreComponent implements OnInit {
     };
     var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
     this.record = new StereoAudioRecorder(stream, options);
+    this.record2 = new StereoAudioRecorder(stream, options);
     this.record.record();
+    this.record2.record();
     this.interval = setInterval(this.pausaInviaRitorna.bind(this), 2000)
   }
 
@@ -90,6 +96,9 @@ export class TrascrittoreComponent implements OnInit {
     this.record.record();
   }
 
+  getTrue(){
+    this.record2.stop(this.processRecordingLive.bind(this))
+  }
 
 
   /**
@@ -103,6 +112,7 @@ export class TrascrittoreComponent implements OnInit {
       this.recording = false;
       clearInterval(this.interval)
       this.record.stop();
+      this.record2.stop();
     }
 
   }
@@ -137,6 +147,25 @@ export class TrascrittoreComponent implements OnInit {
           })
   }
 
+  processRecordingLive(blob: any) {
+    this.url = URL.createObjectURL(blob);
+    console.log("blob", blob);
+    console.log("url", this.url);
+    let formData = new FormData();        //prendo il formdata e lo mando al backend
+    let title = new Date().toLocaleString()
+    formData.append("file", blob, title + '.wav');
+    formData.append("url", this.url)
+    formData.append("data", title)
+    if(this.check){
+      formData.append("state", "true")
+    }else{
+      formData.append("state", "false")
+    }
+    this.http.post("http://localhost:8000/uploadfile", formData)
+      .subscribe((res) => {
+          this.trascrizione2 = res
+      })
+}
 
   /**
   * Process Error.
